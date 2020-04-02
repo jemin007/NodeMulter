@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Photo Multer</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container w-50">
+		<h1 class="text-center my-4">Upload Images here</h1>
+		<h3 class="mt-5 mb-2">Single Upload</h3>
+		<div class="custom-file">
+			<form class="form-control" action="uploadSingle" method="POST" enctype="multipart/form-data">
+				<input name="singleImage" type="file" class="custom-file-input">
+				<label class="custom-file-label" for="customFile">Choose Image</label>
+				<input class="btn btn-success btn-block my-2" type="submit" value="Upload Image">
+			</form>
+		</div>
+
+		<!--MULTIPLE -->
+		<h3 class="mt-5 mb-2">Multiple Upload</h3>
+		<div class="custom-file">
+			<form class="form-control" action="uploadMultiple" method="POST" enctype="multipart/form-data">
+				<input name="multipleImages" type="file" class="custom-file-input" multiple>
+				<label class="custom-file-label" for="customFile">Choose Image</label>
+				<input class="btn btn-danger btn-block my-2" type="submit" value="Upload Multiple Image">
+			</form>
+		</div>
+	</div>
+</body>
+</html>
