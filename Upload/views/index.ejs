@@ -1,22 +1,42 @@
 <html>
-    <head><title>Home</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    </head>
-    <body>
-        <h1 class="text-center my-3">All Images</h1>
+  <head>
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1 class="text-center my-3">All Images</h1>
 
-        <div class="container w-75">
-            <div class="row">
-                     
-                        <div class="col-4">
-                            <img style="border:2px solid red;" class="mx-4 my-3 p-1" height="250" width="250" src=""  alt="Image"> 
-                            <form action="/delete/?_method=DELETE" method="POST"> 
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button class="btn btn-danger float-none mx-4 px-5" style="cursor:pointer;" type="submit">DELETE</button>
-                            </form>
-                        </div>
-                    
-            </div>
+    <div class="container w-75">
+      <div class="row">
+        <% images.forEach(img=>{ %>
+
+        <div class="col-4">
+          <img
+            style="border:2px solid red;"
+            class="mx-4 my-3 p-1"
+            height="250"
+            width="250"
+            src="<%= img.imageUrl %>"
+            alt="<%= img.id %>"
+          />
+          <form action="/delete/<%= img.id %>?_method=DELETE" method="POST">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button
+              class="btn btn-danger float-none mx-4 px-5"
+              style="cursor:pointer;"
+              type="submit"
+            >
+              DELETE
+            </button>
+          </form>
         </div>
-    </body>
+        <% }) %>
+      </div>
+    </div>
+  </body>
 </html>

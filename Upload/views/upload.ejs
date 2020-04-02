@@ -10,7 +10,7 @@
 		<h1 class="text-center my-4">Upload Images here</h1>
 		<h3 class="mt-5 mb-2">Single Upload</h3>
 		<div class="custom-file">
-			<form class="form-control" action="uploadSingle" method="POST" enctype="multipart/form-data">
+			<form class="form-control" action="/uploadsingle" method="POST" enctype="multipart/form-data">
 				<input name="singleImage" type="file" class="custom-file-input">
 				<label class="custom-file-label" for="customFile">Choose Image</label>
 				<input class="btn btn-success btn-block my-2" type="submit" value="Upload Image">
@@ -20,7 +20,7 @@
 		<!--MULTIPLE -->
 		<h3 class="mt-5 mb-2">Multiple Upload</h3>
 		<div class="custom-file">
-			<form class="form-control" action="uploadMultiple" method="POST" enctype="multipart/form-data">
+			<form class="form-control" action="/uploadmultiple" method="POST" enctype="multipart/form-data">
 				<input name="multipleImages" type="file" class="custom-file-input" multiple>
 				<label class="custom-file-label" for="customFile">Choose Image</label>
 				<input class="btn btn-danger btn-block my-2" type="submit" value="Upload Multiple Image">
