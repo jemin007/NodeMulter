@@ -4,7 +4,10 @@ const path = require('path');
 const multer = require('multer');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const fs = require('fs'); //helps to delete files and pictures
 const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 
 dotenv.config({path: './config.env'});
@@ -21,10 +24,30 @@ let imageSchema = new mongoose.Schema({
 
 let Picture = mongoose.model('Picture', imageSchema);
 
+  //middleware for flash
+  app.use(flash());
+
 app.set('views', path.join);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
+
+//middleware for express session
+app.use(session({
+    secret: 'nodejs',
+    resave: true,
+    saveUninitialized: true
+   
+  }))
+
+  //setting messages for flash globally
+  app.use((req,res,next)=>{
+    res.locals.success_msg = req.flash(('success_msg'));
+    res.locals.error_msg = req.flash(('error_msg'));
+    next();
+})
+
+
 
 app.use(methodOverride('_method'));
 
@@ -88,6 +111,7 @@ app.post('/uploadsingle', upload.single('singleImage'), (req,res,next)=>{
             Picture.create({ imageUrl: url })   
             .then(img=>{
                 console.log('Image succesfully saved!');
+                req.flash('success_msg','Image succesfully saved!')
                 res.redirect('/');
             })
 
@@ -114,8 +138,9 @@ app.post('/uploadmultiple', upload.array('multipleImages'),(req,res,next)=>{
                  return console.log('Duplicate image');
                  
              }
-
+             
             await Picture.create({ imageUrl : url });
+            
          })
          .catch(err =>{
                 return console.log(err);
@@ -123,6 +148,29 @@ app.post('/uploadmultiple', upload.array('multipleImages'),(req,res,next)=>{
     });
     res.redirect('/');
 
+});
+
+app.delete('/delete/:id', (req,res)=>{
+    let searchQuery = {_id: req.params.id};
+
+    Picture.findOne(searchQuery)
+     .then(img=>{
+        fs.unlink(__dirname+'/public/'+img.imageUrl, (err)=>{
+            if(err) return console.log(err);
+
+            Picture.deleteOne(searchQuery)
+             .then(img=>{
+                 res.redirect('/');
+             })
+             .catch(err=>{
+                 console.log(err);
+             })
+        })
+     })
+
+     .catch(err=>{
+         console.log(err);
+     })
 })
 
 const port = process.env.PORT;
